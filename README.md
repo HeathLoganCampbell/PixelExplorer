@@ -1,7 +1,7 @@
 # `PixelExplorer`
 
 ## Versions
-## v0.0.1 : Player nothing together :) - 17/May/2021 
+## v0.0.1 : Play nothing together :) - 17/May/2021 
 So far we just have a basic echo server.
 
 How we did this was
