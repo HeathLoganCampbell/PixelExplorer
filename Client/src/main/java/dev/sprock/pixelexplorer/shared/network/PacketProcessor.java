@@ -1,9 +1,12 @@
 package dev.sprock.pixelexplorer.shared.network;
 
 import dev.sprock.pixelexplorer.shared.common.ServerOnly;
-import dev.sprock.pixelexplorer.shared.entity.Player;
+import dev.sprock.pixelexplorer.shared.entity.OnlinePlayer;
+import dev.sprock.pixelexplorer.shared.network.common.RunMode;
+import dev.sprock.pixelexplorer.shared.network.listener.PacketListener;
 import dev.sprock.pixelexplorer.shared.network.packet.Packet;
 import dev.sprock.pixelexplorer.shared.network.packet.TransferPacket;
+import dev.sprock.pixelexplorer.shared.network.packet.login.LoginPacket;
 import dev.sprock.pixelexplorer.shared.network.player.PlayerConnection;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -45,15 +48,31 @@ public class PacketProcessor
         ByteBuf byteBuf = transferPacket.getByteBuf();
 
         Packet packet = packetFactory.getPacketInstance(packetId);
+        if(packet == null) return; // drop
         packet.read(byteBuf);
 
         // Only Servers need to keep track of the player that sent in the packet
         // As clients will only ever recieve packets from the server.
-        Player player = null;
+        OnlinePlayer player = null;
         if(runMode == RunMode.SERVER)
         {
             PlayerConnection playerConnection = this.connectedPlayerMap.get(ctx);
+
             player = playerConnection.getPlayer();
+
+            // Player is not created yet
+            if(player == null)
+            {
+                if(packet instanceof LoginPacket)
+                {
+                    LoginPacket loginPacket = (LoginPacket) packet;
+                    player = new OnlinePlayer(loginPacket.getUsername(), playerConnection);
+                }
+                else
+                {
+                    throw new RuntimeException("Player has sent a " + packet.toString() + " and hasn't got a player instance");
+                }
+            }
         }
 
         packetListener.processPacket(packet, player);

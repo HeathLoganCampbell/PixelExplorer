@@ -1,9 +1,9 @@
 package dev.sprock.pixelexplorer.server;
 
 import dev.sprock.pixelexplorer.server.network.NettyServer;
-import dev.sprock.pixelexplorer.shared.network.PacketListener;
+import dev.sprock.pixelexplorer.server.network.ServerPacketListener;
 import dev.sprock.pixelexplorer.shared.network.PacketProcessor;
-import dev.sprock.pixelexplorer.shared.network.RunMode;
+import dev.sprock.pixelexplorer.shared.network.common.RunMode;
 
 public class PixelExplorerServer implements Runnable
 {
@@ -28,7 +28,7 @@ public class PixelExplorerServer implements Runnable
     public void init()
     {
         this.nettyServer = new NettyServer();
-        this.nettyServer.init(new PacketProcessor(new PacketListener(), RunMode.SERVER));
+        this.nettyServer.init(new PacketProcessor(new ServerPacketListener(), RunMode.SERVER));
         this.nettyServer.start(8000);
     }
 

@@ -3,40 +3,41 @@ package dev.sprock.pixelexplorer.shared.network.packet.play;
 import dev.sprock.pixelexplorer.shared.network.packet.Packet;
 import dev.sprock.pixelexplorer.shared.network.packet.PacketConstants;
 import io.netty.buffer.ByteBuf;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
+/*
+Sent from the Server => Client to say that entity has been teleported
+ */
 @Getter
 @ToString
+@AllArgsConstructor
 @NoArgsConstructor
-public class DummyPacket extends Packet
+public class EntityTeleportPacket extends Packet
 {
-    private int magicNumber;
-    @Setter
-    private int hopCount = 0;
-
-    public DummyPacket(int magicNumber) {
-        this.magicNumber = magicNumber;
-    }
+    public int entityId;
+    public int x, y;
 
     @Override
     public int getPacketId() {
-        return PacketConstants.DUMMY_PACKET_ID;
+        return PacketConstants.ENTITY_TELEPORT_PACKET_ID;
     }
 
     @Override
     public void read(ByteBuf in)
     {
-        this.magicNumber = in.readInt();
-        this.hopCount = in.readInt();
+        this.entityId = in.readInt();
+        this.x = in.readInt();
+        this.y = in.readInt();
     }
 
     @Override
     public void write(ByteBuf out)
     {
-        out.writeInt(this.magicNumber);
-        out.writeInt(this.hopCount);
+        out.writeInt(this.entityId);
+        out.writeInt(this.x);
+        out.writeInt(this.y);
     }
 }

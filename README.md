@@ -144,3 +144,27 @@ public class LoginPacket extends Packet
     }
 }
 ``` 
+
+### v0.0.3 : Spawn, Teleport and Destroy - 19/May/2021
+We added a way to spawn, teleport and destroy entities.
+I'm planning on using these packets for all entities including the player
+themselfs, who would be referenced via the entity id 0.
+
+##### Entity Manage Plan
+In a world, we'll have a list of entities. These entities
+will range from players, animals, monsters and items. which 
+mean we'll have to give each one a unique id that's maintanced
+across all clients. 
+
+This should be pretty straight forward as we can just have a
+hashmap of all entities in <int, entity> so we can have fast look
+ups.
+
+as stated before, 0 would refer to the current player.
+
+A problem we are likely to run into tho, is as we spawn more
+and more entities in the world, our server will become slower and slower
+so to address this problem we should make a regional bucket system. So
+We only pick up entities in our near by area. Something like a quad tree 
+would work well as [seen in this video](https://www.youtube.com/watch?v=OJxEcs0w_kE&ab_channel=TheCodingTrainTheCodingTrainVerified)
+Or a [Spatial Hash Grids](https://www.youtube.com/watch?v=sx4IIQL0x7c) 
