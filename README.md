@@ -169,7 +169,7 @@ We only pick up entities in our near by area. Something like a quad tree
 would work well as [seen in this video](https://www.youtube.com/watch?v=OJxEcs0w_kE&ab_channel=TheCodingTrainTheCodingTrainVerified)
 Or a [Spatial Hash Grids](https://www.youtube.com/watch?v=sx4IIQL0x7c)
 
-#### v0.0.4 : Netty for only networking - 19/May/2021
+### v0.0.4 : Netty for only networking - 19/May/2021
 We moved the processing packets off the netty for the server
 side which will process all the packets only every tick.
 thus making our application more thread safe and easier to make
