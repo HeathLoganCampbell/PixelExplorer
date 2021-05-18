@@ -2,6 +2,7 @@ package dev.sprock.pixelexplorer.server;
 
 import dev.sprock.pixelexplorer.server.network.NettyServer;
 import dev.sprock.pixelexplorer.server.network.ServerPacketListener;
+import dev.sprock.pixelexplorer.server.network.ServerPacketProcessor;
 import dev.sprock.pixelexplorer.shared.network.PacketProcessor;
 import dev.sprock.pixelexplorer.shared.network.common.RunMode;
 
@@ -9,6 +10,7 @@ public class PixelExplorerServer implements Runnable
 {
     private Thread thread;
     private NettyServer nettyServer;
+    private ServerPacketProcessor packetProcessor;
 
     public synchronized void start()
     {
@@ -27,13 +29,16 @@ public class PixelExplorerServer implements Runnable
 
     public void init()
     {
+        this.packetProcessor = new ServerPacketProcessor(new ServerPacketListener(), RunMode.SERVER);
+
         this.nettyServer = new NettyServer();
-        this.nettyServer.init(new PacketProcessor(new ServerPacketListener(), RunMode.SERVER));
+        this.nettyServer.init(packetProcessor);
         this.nettyServer.start(8000);
     }
 
     public void tick()
     {
+        this.packetProcessor.update();
 //        System.out.println("Tick");
     }
 

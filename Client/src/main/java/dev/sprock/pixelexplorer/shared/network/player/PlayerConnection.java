@@ -3,6 +3,7 @@ package dev.sprock.pixelexplorer.shared.network.player;
 import com.sun.istack.internal.NotNull;
 import dev.sprock.pixelexplorer.shared.entity.OnlinePlayer;
 import dev.sprock.pixelexplorer.shared.entity.Player;
+import dev.sprock.pixelexplorer.shared.network.PacketProcessor;
 import dev.sprock.pixelexplorer.shared.network.common.ConnectionState;
 import dev.sprock.pixelexplorer.shared.network.packet.Packet;
 import io.netty.channel.socket.SocketChannel;
@@ -20,6 +21,8 @@ public class PlayerConnection
     private OnlinePlayer player;
     @Setter
     private ConnectionState state;
+    @Setter
+    private PacketProcessor packetProcessor;
 
     public PlayerConnection(@NotNull SocketChannel channel)
     {

@@ -19,7 +19,7 @@ public class PacketListener
         });
     }
 
-    public <T extends Packet> void processPacket(@NotNull T packet, @NotNull OnlinePlayer player ) {
+    public <T extends Packet> void processPacket(@NotNull T packet, @NotNull OnlinePlayer player) {
 
         final Class clazz = packet.getClass();
 

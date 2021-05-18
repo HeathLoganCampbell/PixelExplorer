@@ -1,5 +1,6 @@
 package dev.sprock.pixelexplorer.shared.network;
 
+import com.sun.istack.internal.NotNull;
 import dev.sprock.pixelexplorer.shared.common.ServerOnly;
 import dev.sprock.pixelexplorer.shared.entity.OnlinePlayer;
 import dev.sprock.pixelexplorer.shared.network.common.RunMode;
@@ -32,6 +33,7 @@ public class PacketProcessor
     public PlayerConnection registerPlayerConnection(ChannelHandlerContext ctx)
     {
         PlayerConnection playerConnection = new PlayerConnection((SocketChannel) ctx.channel());
+        playerConnection.setPacketProcessor(this);
         this.connectedPlayerMap.put(ctx, playerConnection);
         return playerConnection;
     }
@@ -75,6 +77,30 @@ public class PacketProcessor
             }
         }
 
+        this.processPacket(packet, player);
+    }
+
+    public void processPacket(@NotNull Packet packet, @NotNull OnlinePlayer player)
+    {
+       this.forceProcessPacket(packet, player);
+    }
+
+    public void forceProcessPacket(@NotNull Packet packet, @NotNull OnlinePlayer player)
+    {
         packetListener.processPacket(packet, player);
+    }
+
+    // TEMP
+    public void update()
+    {
+        if (this.connectedPlayerMap.size() == 0)
+        {
+            return;
+        }
+
+        // Tick all players
+        this.connectedPlayerMap.forEach((key, value) -> {
+            value.getPlayer().update();
+        });
     }
 }
