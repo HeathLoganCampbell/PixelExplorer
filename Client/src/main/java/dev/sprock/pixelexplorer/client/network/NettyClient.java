@@ -2,9 +2,10 @@ package dev.sprock.pixelexplorer.client.network;
 
 import com.sun.istack.internal.NotNull;
 import dev.sprock.pixelexplorer.shared.network.PacketProcessor;
+import dev.sprock.pixelexplorer.shared.network.netty.codec.ClientProcessHandler;
 import dev.sprock.pixelexplorer.shared.network.netty.codec.PacketDecoder;
 import dev.sprock.pixelexplorer.shared.network.netty.codec.PacketEncoder;
-import dev.sprock.pixelexplorer.shared.network.netty.codec.ProcessHandler;
+import dev.sprock.pixelexplorer.shared.network.netty.codec.ServerProcessHandler;
 import dev.sprock.pixelexplorer.shared.network.packet.Packet;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -48,7 +49,7 @@ public class NettyClient
 
                 pipeline.addLast("Decoder", new PacketDecoder());
                 pipeline.addLast("Encoder", new PacketEncoder());
-                pipeline.addLast("ServerChannel", new ProcessHandler(packetProcessor));
+                pipeline.addLast("ClientChannel", new ClientProcessHandler(packetProcessor));
             }
         });
     }

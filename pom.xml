@@ -10,8 +10,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>Client</module>
-        <module>Server</module>
-        <module>Core</module>
     </modules>
 
     <dependencies>
@@ -20,6 +18,13 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.63.Final</version>
+        </dependency>
+
+        <!-- Easy @getters and @setters -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
         </dependency>
     </dependencies>
 </project>

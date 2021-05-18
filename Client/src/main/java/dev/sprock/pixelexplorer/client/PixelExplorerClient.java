@@ -3,6 +3,8 @@ package dev.sprock.pixelexplorer.client;
 import dev.sprock.pixelexplorer.client.network.NettyClient;
 import dev.sprock.pixelexplorer.shared.network.PacketListener;
 import dev.sprock.pixelexplorer.shared.network.PacketProcessor;
+import dev.sprock.pixelexplorer.shared.network.RunMode;
+import dev.sprock.pixelexplorer.shared.network.packet.login.LoginPacket;
 import dev.sprock.pixelexplorer.shared.network.packet.play.DummyPacket;
 
 public class PixelExplorerClient implements Runnable
@@ -28,10 +30,10 @@ public class PixelExplorerClient implements Runnable
     public void init()
     {
         client = new NettyClient();
-        client.init(new PacketProcessor(new PacketListener()));
+        client.init(new PacketProcessor(new PacketListener(), RunMode.CLIENT));
         client.start("localhost", 8000);
 
-        client.sendPacket(new DummyPacket(42));
+        client.sendPacket(new LoginPacket("Sprock"));
         System.out.println("Packet sent");
     }
 

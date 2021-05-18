@@ -1,6 +1,7 @@
 package dev.sprock.pixelexplorer.shared.network.packet.play;
 
 import dev.sprock.pixelexplorer.shared.network.packet.Packet;
+import dev.sprock.pixelexplorer.shared.network.packet.PacketConstants;
 import io.netty.buffer.ByteBuf;
 
 public class DummyPacket extends Packet
@@ -28,7 +29,7 @@ public class DummyPacket extends Packet
 
     @Override
     public int getPacketId() {
-        return 0x01;
+        return PacketConstants.DUMMY_PACKET_ID;
     }
 
     @Override
