@@ -1,7 +1,7 @@
 # `PixelExplorer`
 
 ## Versions
-## v0.0.1 : Play nothing together :) - 17/May/2021 
+### v0.0.1 : Play nothing together :) - 17/May/2021 
 So far we just have a basic echo server.
 
 How we did this was
@@ -28,7 +28,7 @@ So currently, as soon as the client joins the server, it'll
 send a DummyPacket which the server will pick up and decode
 then print to the console.
 ##### DummyPacket Code
-```
+```java
 public class DummyPacket extends Packet
 {
     private int magicNumber;
@@ -82,7 +82,7 @@ public class DummyPacket extends Packet
 ```
 
 ##### DummyPacket Packet Listener
-```
+```java
  setListener(DummyPacket.class, packet -> {
             System.out.println("Recieved " + packet.toString());
         });
@@ -117,7 +117,7 @@ just get 2 players up on the screen then they can see each other move
 and talk to each other. hopefully, we can have that functionality done by
 the end of the week.
                                                                              
-```
+```java
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
