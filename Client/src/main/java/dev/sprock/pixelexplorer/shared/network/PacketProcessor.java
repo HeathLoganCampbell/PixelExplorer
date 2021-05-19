@@ -100,7 +100,9 @@ public class PacketProcessor
 
         // Tick all players
         this.connectedPlayerMap.forEach((key, value) -> {
-            value.getPlayer().update();
+            OnlinePlayer player = value.getPlayer();
+            if(player == null) return;
+            player.update();
         });
     }
 }

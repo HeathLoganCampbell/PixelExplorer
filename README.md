@@ -175,4 +175,10 @@ side which will process all the packets only every tick.
 thus making our application more thread safe and easier to make
 without the fear of race conditions.
 
- 
+### v0.0.5 : Rendering something to the screen - 20/May/2021
+We have now attached a rendering engine to the client end, which 
+can render a basic scene, It follows a simple set up of breaking 
+up the render and update cycles. So we have have more frames than
+updates if need be.
+
+![First render](./readme-assets/v0.0.5.png)
