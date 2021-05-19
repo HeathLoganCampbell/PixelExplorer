@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
 import dev.sprock.pixelexplorer.client.engine.inputs.InputListener;
+import lombok.Getter;
 import lombok.Setter;
 
 public class Engine<G extends Game> extends Canvas implements Runnable
@@ -20,6 +21,7 @@ public class Engine<G extends Game> extends Canvas implements Runnable
 	private boolean running;
 	private Thread thread;
 	private JFrame frame;
+
 
 	@Setter
 	private double framesPerSecond = 60;
@@ -33,7 +35,7 @@ public class Engine<G extends Game> extends Canvas implements Runnable
 	
 	private BufferedImage image;
 	private int[] pixels;
-	
+
 	public Engine(int width, int height, int scale)
 	{
 		this.width = width;
@@ -167,7 +169,8 @@ public class Engine<G extends Game> extends Canvas implements Runnable
 
 				tickCount++;
 				if (tickCount % fps == 0) {
-					System.out.println(frames + " fps");
+					this.game.setFps(frames);
+//					System.out.println(frames + " fps");
 					lastTime += 1000;
 					frames = 0;
 				}

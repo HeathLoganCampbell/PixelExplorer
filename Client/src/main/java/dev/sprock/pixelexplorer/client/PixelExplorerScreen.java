@@ -1,12 +1,22 @@
 package dev.sprock.pixelexplorer.client;
 
+import dev.sprock.pixelexplorer.client.engine.assets.Asset;
+import dev.sprock.pixelexplorer.client.engine.graphics.Font;
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
+
+import java.io.IOException;
 
 public class PixelExplorerScreen extends Screen<PixelExplorerGame>
 {
     public PixelExplorerScreen(int width, int height)
     {
         super(width, height);
+
+        try {
+            Font.init(Asset.loadBitmap("fonts.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -14,9 +24,6 @@ public class PixelExplorerScreen extends Screen<PixelExplorerGame>
     {
         this.clearScreen();
 
-        for (int i = 0; i < 100; i++)
-        {
-            this.setPixel(i, i, 0xFF00FF);
-        }
+        Font.text("Hehe", this, 5, 5, 0xFFFFFF);
     }
 }

@@ -23,12 +23,12 @@ public class PixelExplorerGame extends Game
         this.width = width;
         this.height = height;
 
-        client = new NettyClient();
-        client.init(new PacketProcessor(new ClientPacketListener(), RunMode.CLIENT));
-        client.start("localhost", 8000);
-
-        client.sendPacket(new LoginPacket("Sprock"));
-        System.out.println("Packet sent");
+//        client = new NettyClient();
+//        client.init(new PacketProcessor(new ClientPacketListener(), RunMode.CLIENT));
+//        client.start("localhost", 8000);
+//
+//        client.sendPacket(new LoginPacket("Sprock"));
+//        System.out.println("Packet sent");
     }
 
     @Override
