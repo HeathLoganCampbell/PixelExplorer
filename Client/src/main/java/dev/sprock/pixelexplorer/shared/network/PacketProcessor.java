@@ -102,7 +102,7 @@ public class PacketProcessor
         this.connectedPlayerMap.forEach((key, value) -> {
             OnlinePlayer player = value.getPlayer();
             if(player == null) return;
-            player.update();
+            player.tick();
         });
     }
 }

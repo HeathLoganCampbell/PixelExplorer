@@ -39,7 +39,7 @@ public class OnlinePlayer extends Player
     }
 
     @Override
-    public void update()
+    public void tick()
     {
         PacketProcessor packetProcessor = this.getPlayerConnection().getPacketProcessor();
 
@@ -48,6 +48,6 @@ public class OnlinePlayer extends Player
             packetProcessor.forceProcessPacket(packet, this);
         }
 
-        super.update();
+        super.tick();
     }
 }

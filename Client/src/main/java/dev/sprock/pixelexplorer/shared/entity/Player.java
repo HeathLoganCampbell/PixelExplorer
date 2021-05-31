@@ -20,5 +20,4 @@ public class Player extends Entity
     {
         this.username = username;
     }
-
 }

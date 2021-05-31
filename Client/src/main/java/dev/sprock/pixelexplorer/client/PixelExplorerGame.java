@@ -4,10 +4,15 @@ import dev.sprock.pixelexplorer.client.engine.Game;
 import dev.sprock.pixelexplorer.client.engine.inputs.InputListener;
 import dev.sprock.pixelexplorer.client.network.ClientPacketListener;
 import dev.sprock.pixelexplorer.client.network.NettyClient;
+import dev.sprock.pixelexplorer.shared.entity.Player;
 import dev.sprock.pixelexplorer.shared.network.PacketProcessor;
 import dev.sprock.pixelexplorer.shared.network.common.RunMode;
 import dev.sprock.pixelexplorer.shared.network.packet.login.LoginPacket;
+import dev.sprock.pixelexplorer.shared.world.World;
+import javafx.scene.input.KeyCode;
 import lombok.Getter;
+
+import java.awt.event.KeyEvent;
 
 public class PixelExplorerGame extends Game
 {
@@ -17,6 +22,7 @@ public class PixelExplorerGame extends Game
     private int height;
 
     private NettyClient client;
+    private World world;
 
     public PixelExplorerGame(int width, int height)
     {
@@ -29,10 +35,33 @@ public class PixelExplorerGame extends Game
 //
 //        client.sendPacket(new LoginPacket("Sprock"));
 //        System.out.println("Packet sent");
+
+        Explorer.currentWorld = new World();
+        Explorer.thePlayer = new Player("Sprock");
+        Explorer.thePlayer.updatePosition(15, 15);
+        Explorer.currentWorld.addEntity(Explorer.thePlayer);
     }
 
     @Override
     public void tick(InputListener inputListener)
     {
+        double SPEED = 3.3;
+        if (inputListener.isPressed(KeyEvent.VK_W)) {
+            Explorer.thePlayer.setVelocityY(-SPEED);
+        }
+
+        if (inputListener.isPressed(KeyEvent.VK_S)) {
+            Explorer.thePlayer.setVelocityY(SPEED);
+        }
+
+        if (inputListener.isPressed(KeyEvent.VK_A)) {
+            Explorer.thePlayer.setVelocityX(-SPEED);
+        }
+
+        if (inputListener.isPressed(KeyEvent.VK_D)) {
+            Explorer.thePlayer.setVelocityX(SPEED);
+        }
+
+        Explorer.currentWorld.tick(inputListener);
     }
 }

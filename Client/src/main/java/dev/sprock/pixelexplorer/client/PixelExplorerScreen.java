@@ -24,6 +24,8 @@ public class PixelExplorerScreen extends Screen<PixelExplorerGame>
     {
         this.clearScreen();
 
-        Font.text("Hehe", this, 5, 5, 0xFFFFFF);
+        Explorer.currentWorld.render(this);
+
+        System.out.println("Velocity" + Explorer.thePlayer.getVelocityX() + " , " + Explorer.thePlayer.getVelocityY());
     }
 }
