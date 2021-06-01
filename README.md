@@ -182,3 +182,9 @@ up the render and update cycles. So we have have more frames than
 updates if need be.
 
 ![First render](./readme-assets/v0.0.5.png)
+
+### v0.0.6 : Two Player - 2/June/2021
+We now have the graphical part working so that you can control
+pixels individally, linking by the server. Spawning and moving works.
+
+![First render](./readme-assets/v0.0.6.png)
