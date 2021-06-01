@@ -47,19 +47,19 @@ public class PixelExplorerGame extends Game
     {
         double SPEED = 3.3;
         if (inputListener.isPressed(KeyEvent.VK_W)) {
-            Explorer.thePlayer.setVelocityY(-SPEED);
+            Explorer.thePlayer.getVelocity().setY(-SPEED);
         }
 
         if (inputListener.isPressed(KeyEvent.VK_S)) {
-            Explorer.thePlayer.setVelocityY(SPEED);
+            Explorer.thePlayer.getVelocity().setY(SPEED);
         }
 
         if (inputListener.isPressed(KeyEvent.VK_A)) {
-            Explorer.thePlayer.setVelocityX(-SPEED);
+            Explorer.thePlayer.getVelocity().setX(-SPEED);
         }
 
         if (inputListener.isPressed(KeyEvent.VK_D)) {
-            Explorer.thePlayer.setVelocityX(SPEED);
+            Explorer.thePlayer.getVelocity().setX(SPEED);
         }
 
         Explorer.currentWorld.tick(inputListener);

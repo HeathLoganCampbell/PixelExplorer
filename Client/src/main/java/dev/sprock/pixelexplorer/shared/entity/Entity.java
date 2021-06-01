@@ -2,6 +2,7 @@ package dev.sprock.pixelexplorer.shared.entity;
 
 import dev.sprock.pixelexplorer.client.engine.graphics.Font;
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
+import dev.sprock.pixelexplorer.shared.utils.Vector;
 import lombok.Getter;
 
 public class Entity
@@ -9,44 +10,14 @@ public class Entity
     @Getter
     private int entityId;
     private int x, y;
-    private double vx = 0, vy = 0;
+    @Getter
+    private Vector velocity = new Vector();
 
     public void updatePosition(int x, int y)
     {
         this.x = x;
         this.y = y;
 
-    }
-
-    public double getVelocityDist()
-    {
-        return this.vx * this.vx + this.vy * this.vy;
-    }
-
-    public double getVelocityX()
-    {
-        return this.vx;
-    }
-
-    public double getVelocityY()
-    {
-        return this.vy;
-    }
-
-    public void setVelocity(double vx, double vy)
-    {
-        this.vx = vx;
-        this.vy = vy;
-    }
-
-    public void setVelocityX(double vx)
-    {
-        this.vx = vx;
-    }
-
-    public void setVelocityY(double vy)
-    {
-        this.vy = vy;
     }
 
     public void remove()
@@ -58,14 +29,13 @@ public class Entity
     {
         double FRICTION = 0.6;
 
-        this.vx *= FRICTION;
-        this.vy *= FRICTION;
+        this.velocity.scale(FRICTION);
 
-        if(Math.abs(vy) < 0.03) vy = 0;
-        if(Math.abs(vx) < 0.03) vx = 0;
+        if(Math.abs(this.velocity.getY()) < 0.03) this.velocity.setY(0);
+        if(Math.abs(this.velocity.getX()) < 0.03) this.velocity.setX(0);
 
-        this.x += vx * 4;
-        this.y += vy * 4;
+        this.x += this.velocity.getX() * 2;
+        this.y += this.velocity.getY() * 2;
     }
 
     public void render(Screen screen)

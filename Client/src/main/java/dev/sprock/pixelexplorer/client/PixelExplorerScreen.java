@@ -26,6 +26,6 @@ public class PixelExplorerScreen extends Screen<PixelExplorerGame>
 
         Explorer.currentWorld.render(this);
 
-        System.out.println("Velocity" + Explorer.thePlayer.getVelocityX() + " , " + Explorer.thePlayer.getVelocityY());
+        System.out.println("Velocity" + Explorer.thePlayer.getVelocity().toString());
     }
 }
