@@ -183,8 +183,13 @@ updates if need be.
 
 ![First render](./readme-assets/v0.0.5.png)
 
-### v0.0.6 : Two Player - 2/June/2021
+### v0.0.6.1 : Controls - 1/June/2021
+We added users controls, so that you can control the pixel with `awsd`
+
+### v0.0.6.2 : Two Player - 2/June/2021
 We now have the graphical part working so that you can control
 pixels individally, linking by the server. Spawning and moving works.
+Also the game loop was rewriten so it'll feel more smoother and entities now
+use a vector oject
 
-![First render](./readme-assets/v0.0.6.png)
+![Multiplaye on gui](./readme-assets/v0.0.6.png)
