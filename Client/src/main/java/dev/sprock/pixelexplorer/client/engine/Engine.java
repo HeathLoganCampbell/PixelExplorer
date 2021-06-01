@@ -36,6 +36,13 @@ public class Engine<G extends Game> extends Canvas implements Runnable
 	private BufferedImage image;
 	private int[] pixels;
 
+	// desired fps
+	private final static int    MAX_FPS = 50;
+	// maximum number of frames to be skipped
+	private final static int    MAX_FRAME_SKIPS = 5;
+	// the frame period
+	private final static int    FRAME_PERIOD = 1000 / MAX_FPS;
+
 	public Engine(int width, int height, int scale)
 	{
 		this.width = width;
@@ -141,52 +148,46 @@ public class Engine<G extends Game> extends Canvas implements Runnable
 	@Override
 	public void run() 
 	{
-		int frames = 0;
+		long beginTime;     // the time when the cycle begun
+		long timeDiff;      // the time it took for the cycle to execute
+		int sleepTime;      // ms to sleep (<0 if we're behind)
+		int framesSkipped;  // number of frames being skipped
 
-		double unprocessedSeconds = 0;
-		double fps = this.framesPerSecond;
-		long lastTime = System.nanoTime();
-		double secondsPerTick = 1 / fps;
-		int tickCount = 0;
-		long maxPassTime = 100000000;
+		sleepTime = 0;
 
 		requestFocus();
 
-		while (running) {
-			long now = System.nanoTime();
-			long passedTime = now - lastTime;
-			lastTime = now;
-			if (passedTime < 0) passedTime = 0;
-			if (passedTime > maxPassTime) passedTime = maxPassTime;
+		while (running)
+		{
+			beginTime = System.currentTimeMillis();
+			framesSkipped = 0;  // resetting the frames skipped
+			// update game state
+			this.tick();
+			// render state to the screen
+			// draws the canvas on the panel
+			this.render();
+			// calculate how long did the cycle take
+			timeDiff = System.currentTimeMillis() - beginTime;
+			// calculate sleep time
+			sleepTime = (int)(FRAME_PERIOD - timeDiff);
 
-			unprocessedSeconds += passedTime / 1000000000.0;
-
-			boolean ticked = false;
-			while (unprocessedSeconds > secondsPerTick) {
-				tick();
-				unprocessedSeconds -= secondsPerTick;
-				ticked = true;
-
-				tickCount++;
-				if (tickCount % fps == 0) {
-					this.game.setFps(frames);
-//					System.out.println(frames + " fps");
-					lastTime += 1000;
-					frames = 0;
-				}
-			}
-
-			if (ticked) {
-				render();
-				frames++;
-			} else {
+			if (sleepTime > 0) {
+				// if sleepTime > 0 we're OK
 				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+					// send the thread to sleep for a short period
+					// very useful for battery saving
+					Thread.sleep(sleepTime);
+				} catch (InterruptedException e) {}
 			}
 
+			while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) {
+				// we need to catch up
+				// update without rendering
+				this.tick();
+				// add frame period to check if in next frame
+				sleepTime += FRAME_PERIOD;
+				framesSkipped++;
+			}
 		}
 	}
 }
