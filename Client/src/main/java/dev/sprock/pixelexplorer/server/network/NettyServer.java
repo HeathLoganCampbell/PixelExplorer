@@ -1,6 +1,7 @@
 package dev.sprock.pixelexplorer.server.network;
 
 import com.sun.istack.internal.NotNull;
+import dev.sprock.pixelexplorer.server.Tux;
 import dev.sprock.pixelexplorer.shared.network.PacketProcessor;
 import dev.sprock.pixelexplorer.shared.network.netty.codec.PacketDecoder;
 import dev.sprock.pixelexplorer.shared.network.netty.codec.PacketEncoder;
@@ -19,7 +20,7 @@ public class NettyServer
     private EventLoopGroup boss, worker;
     private ServerSocketChannel channel;
 
-    public void init(PacketProcessor packetProcessor)
+    public void init()
     {
         boss = new NioEventLoopGroup(2);
         worker = new NioEventLoopGroup(2);
@@ -29,6 +30,7 @@ public class NettyServer
         this.bootstrap = new ServerBootstrap()
                 .group(boss, worker)
                 .channel(channel);
+
 
         bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
             protected void initChannel(@NotNull SocketChannel ch) {
@@ -42,7 +44,7 @@ public class NettyServer
 
                 pipeline.addLast("Decoder", new PacketDecoder());
                 pipeline.addLast("Encoder", new PacketEncoder());
-                pipeline.addLast("ServerChannel", new ServerProcessHandler(packetProcessor));
+                pipeline.addLast("ServerChannel", new ServerProcessHandler(Tux.getPacketProcessor()));
             }
         });
     }

@@ -11,4 +11,5 @@ public class PacketConstants
     public static final int ENTITY_SPAWN_PACKET_ID = 10;
     public static final int ENTITY_DESTROY_PACKET_ID = 11;
     public static final int ENTITY_TELEPORT_PACKET_ID = 12;
+    public static final int INIT_WORLD_PACKET_ID = 13;
 }

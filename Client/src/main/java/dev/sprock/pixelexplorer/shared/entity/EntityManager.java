@@ -3,6 +3,7 @@ package dev.sprock.pixelexplorer.shared.entity;
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class EntityManager
@@ -12,6 +13,11 @@ public class EntityManager
     public void addEntity(Entity entity)
     {
         this.entities.add(entity);
+    }
+
+    public void removeEntity(int id)
+    {
+        this.entities.removeIf(entity -> entity.getEntityId() == id);
     }
 
     public void tick()
@@ -28,5 +34,22 @@ public class EntityManager
         {
             entity.render(screen);
         }
+    }
+
+    public Entity getEntity(int entityId)
+    {
+        for (Entity entity : entities) {
+            if (entityId == entity.getEntityId())
+            {
+                return entity;
+            }
+        }
+
+        return null;
+    }
+
+    public Collection<Entity> getEntities()
+    {
+        return this.entities;
     }
 }

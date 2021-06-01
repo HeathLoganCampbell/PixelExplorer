@@ -1,5 +1,6 @@
 package dev.sprock.pixelexplorer.shared.network.packet.play;
 
+import dev.sprock.pixelexplorer.shared.entity.EntityType;
 import dev.sprock.pixelexplorer.shared.network.packet.Packet;
 import dev.sprock.pixelexplorer.shared.network.packet.PacketConstants;
 import io.netty.buffer.ByteBuf;
@@ -20,6 +21,11 @@ public class EntitySpawnPacket extends Packet
     public int entityId;
     public int entityType;
     public int x, y;
+
+    public EntitySpawnPacket(int entityId, EntityType entityType, int x, int y)
+    {
+        this(entityId, entityType.getId(), x, y);
+    }
 
     @Override
     public int getPacketId() {

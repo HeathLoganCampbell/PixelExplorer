@@ -22,10 +22,10 @@ public class PixelExplorerScreen extends Screen<PixelExplorerGame>
     @Override
     public void render(PixelExplorerGame game)
     {
+        if(Explorer.thePlayer == null) return;
+
         this.clearScreen();
 
-        Explorer.currentWorld.render(this);
-
-        System.out.println("Velocity" + Explorer.thePlayer.getVelocity().toString());
+        Explorer.thePlayer.getWorld().render(this);
     }
 }

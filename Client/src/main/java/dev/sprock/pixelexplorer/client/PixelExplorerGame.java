@@ -4,12 +4,15 @@ import dev.sprock.pixelexplorer.client.engine.Game;
 import dev.sprock.pixelexplorer.client.engine.inputs.InputListener;
 import dev.sprock.pixelexplorer.client.network.ClientPacketListener;
 import dev.sprock.pixelexplorer.client.network.NettyClient;
+import dev.sprock.pixelexplorer.shared.entity.EntityType;
 import dev.sprock.pixelexplorer.shared.entity.Player;
 import dev.sprock.pixelexplorer.shared.network.PacketProcessor;
 import dev.sprock.pixelexplorer.shared.network.common.RunMode;
 import dev.sprock.pixelexplorer.shared.network.packet.login.LoginPacket;
+import dev.sprock.pixelexplorer.shared.network.packet.play.EntitySpawnPacket;
+import dev.sprock.pixelexplorer.shared.network.packet.play.EntityTeleportPacket;
+import dev.sprock.pixelexplorer.shared.network.packet.play.InitWorldPacket;
 import dev.sprock.pixelexplorer.shared.world.World;
-import javafx.scene.input.KeyCode;
 import lombok.Getter;
 
 import java.awt.event.KeyEvent;
@@ -29,22 +32,19 @@ public class PixelExplorerGame extends Game
         this.width = width;
         this.height = height;
 
-//        client = new NettyClient();
-//        client.init(new PacketProcessor(new ClientPacketListener(), RunMode.CLIENT));
-//        client.start("localhost", 8000);
-//
-//        client.sendPacket(new LoginPacket("Sprock"));
-//        System.out.println("Packet sent");
+        client = new NettyClient();
+        client.init(new PacketProcessor(new ClientPacketListener(), RunMode.CLIENT));
+        client.start("localhost", 8000);
 
-        Explorer.currentWorld = new World();
-        Explorer.thePlayer = new Player("Sprock");
-        Explorer.thePlayer.updatePosition(15, 15);
-        Explorer.currentWorld.addEntity(Explorer.thePlayer);
+        client.sendPacket(new LoginPacket("Sprock"));
+        client.sendPacket(new InitWorldPacket(0));
     }
 
     @Override
     public void tick(InputListener inputListener)
     {
+        if(Explorer.thePlayer == null) return;
+
         double SPEED = 3.3;
         if (inputListener.isPressed(KeyEvent.VK_W)) {
             Explorer.thePlayer.getVelocity().setY(-SPEED);
@@ -62,6 +62,11 @@ public class PixelExplorerGame extends Game
             Explorer.thePlayer.getVelocity().setX(SPEED);
         }
 
-        Explorer.currentWorld.tick(inputListener);
+        Explorer.thePlayer.getWorld().tick(inputListener);
+
+        if (Explorer.thePlayer.isMovedLastTick())
+        {
+            client.sendPacket(new EntityTeleportPacket(0, Explorer.thePlayer.getX(), Explorer.thePlayer.getY()));
+        }
     }
 }

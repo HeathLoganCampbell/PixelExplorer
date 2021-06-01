@@ -24,7 +24,7 @@ public class Engine<G extends Game> extends Canvas implements Runnable
 
 
 	@Setter
-	private double framesPerSecond = 60;
+	private double framesPerSecond = 24;
 	private int width;
 	private int height;
 	private int scale;
@@ -37,11 +37,11 @@ public class Engine<G extends Game> extends Canvas implements Runnable
 	private int[] pixels;
 
 	// desired fps
-	private final static int    MAX_FPS = 50;
+	private final static int    TICKS_PER_SECOND = 20;
 	// maximum number of frames to be skipped
 	private final static int    MAX_FRAME_SKIPS = 5;
 	// the frame period
-	private final static int    FRAME_PERIOD = 1000 / MAX_FPS;
+	private final static int    TICK_PERIOD = 1000 / TICKS_PER_SECOND;
 
 	public Engine(int width, int height, int scale)
 	{
@@ -169,15 +169,19 @@ public class Engine<G extends Game> extends Canvas implements Runnable
 			// calculate how long did the cycle take
 			timeDiff = System.currentTimeMillis() - beginTime;
 			// calculate sleep time
-			sleepTime = (int)(FRAME_PERIOD - timeDiff);
+			sleepTime = (int)(TICK_PERIOD - timeDiff);
 
 			if (sleepTime > 0) {
 				// if sleepTime > 0 we're OK
-				try {
+				try
+				{
 					// send the thread to sleep for a short period
 					// very useful for battery saving
 					Thread.sleep(sleepTime);
-				} catch (InterruptedException e) {}
+				}
+				catch (InterruptedException e)
+				{
+				}
 			}
 
 			while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) {
@@ -185,7 +189,7 @@ public class Engine<G extends Game> extends Canvas implements Runnable
 				// update without rendering
 				this.tick();
 				// add frame period to check if in next frame
-				sleepTime += FRAME_PERIOD;
+				sleepTime += TICK_PERIOD;
 				framesSkipped++;
 			}
 		}

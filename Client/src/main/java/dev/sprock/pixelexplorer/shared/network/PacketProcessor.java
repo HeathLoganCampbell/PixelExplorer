@@ -85,6 +85,15 @@ public class PacketProcessor
        this.forceProcessPacket(packet, player);
     }
 
+    public void broadcastPacketIgnoreSelf(@NotNull Packet packet, @NotNull OnlinePlayer player)
+    {
+        for (Map.Entry<ChannelHandlerContext, PlayerConnection> entry : this.connectedPlayerMap.entrySet())
+        {
+            if(player.getPlayerConnection() == entry.getValue()) continue;
+            entry.getValue().sendPacket(packet);
+        }
+    }
+
     public void forceProcessPacket(@NotNull Packet packet, @NotNull OnlinePlayer player)
     {
         packetListener.processPacket(packet, player);
