@@ -190,6 +190,8 @@ We added users controls, so that you can control the pixel with `awsd`
 We now have the graphical part working so that you can control
 pixels individally, linking by the server. Spawning and moving works.
 Also the game loop was rewriten so it'll feel more smoother and entities now
-use a vector oject
+use a vector oject.
+
+Also note, packets will be flushed every tick, so that they aren't just flushed on write, thus saving the OI from a lot of unneed work
 
 ![Multiplaye on gui](./readme-assets/v0.0.6.png)
