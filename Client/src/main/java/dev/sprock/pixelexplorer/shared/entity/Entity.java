@@ -54,8 +54,8 @@ public class Entity
     public void tick()
     {
         this.movedLastTick = false;
-        if(this.velocity.getX() != 0.0 && this.velocity.getY() != 0.0) {
-            double FRICTION = 0.6;
+        if(this.velocity.getX() != 0.0 || this.velocity.getY() != 0.0) {
+            double FRICTION = 0.3;
 
             this.velocity.scale(FRICTION);
 
