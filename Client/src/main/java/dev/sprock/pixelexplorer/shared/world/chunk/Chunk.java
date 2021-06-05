@@ -1,6 +1,7 @@
 package dev.sprock.pixelexplorer.shared.world.chunk;
 
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
+import dev.sprock.pixelexplorer.shared.utils.ChunkUtils;
 import dev.sprock.pixelexplorer.shared.world.tile.Tile;
 import lombok.Getter;
 /*
@@ -53,10 +54,8 @@ public class Chunk
         }
     }
 
-    public Long getLongId()
+    public long getLongId()
     {
-        int chunkX = this.chunkX;
-        int chunkZ = this.chunkY;
-        return (long) chunkX & 0xffffffffL | ((long) chunkZ & 0xffffffffL) << 32;
+        return ChunkUtils.toLong(chunkX, chunkY);
     }
 }

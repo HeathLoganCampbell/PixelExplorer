@@ -5,7 +5,11 @@ import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
 import dev.sprock.pixelexplorer.client.engine.inputs.InputListener;
 import dev.sprock.pixelexplorer.shared.entity.Entity;
 import dev.sprock.pixelexplorer.shared.entity.EntityManager;
+import dev.sprock.pixelexplorer.shared.utils.ChunkUtils;
 import dev.sprock.pixelexplorer.shared.world.chunk.Chunk;
+import dev.sprock.pixelexplorer.shared.world.generator.BasicChunkGenerator;
+import dev.sprock.pixelexplorer.shared.world.generator.ChunkGenerator;
+import dev.sprock.pixelexplorer.shared.world.tile.Tile;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -19,20 +23,11 @@ public class World
     private int id;
     private EntityManager entityManager = new EntityManager();
     private HashMap<Long, Chunk> chunkMap = new HashMap<>();
+    private ChunkGenerator chunkGenerator = new BasicChunkGenerator();
 
     public World(int worldId)
     {
         this.id = worldId;
-
-        short[] tiles = new short[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
-        Arrays.fill(tiles, (short) 1);
-
-        Chunk basicChunk = new Chunk(0, 0);
-        Chunk basicChunk2 = new Chunk(1, 0);
-        basicChunk.setTiles(tiles);
-        basicChunk2.setTiles(tiles);
-        this.loadChunk(basicChunk);
-        this.loadChunk(basicChunk2);
     }
 
     public void addEntity(Entity entity)
@@ -40,8 +35,20 @@ public class World
         this.entityManager.addEntity(entity);
     }
 
-    public void tick(InputListener inputListener) {
+    public void tick(InputListener inputListener)
+    {
         this.entityManager.tick();
+
+        for (Entity entity : this.entityManager.getEntities())
+        {
+            int chunkX = (int) Math.floor(((double) entity.getX() / Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
+            int chunkY = (int) Math.floor(((double) entity.getY()/ Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
+            if (!this.isChunkLoaded(chunkX, chunkY))
+            {
+                Chunk chunk = this.chunkGenerator.generateChunk(chunkX, chunkY);
+                this.loadChunk(chunk);
+            }
+        }
     }
 
     public void render(Screen screen)
@@ -73,5 +80,10 @@ public class World
     public void loadChunk(Chunk chunk)
     {
         this.chunkMap.put(chunk.getLongId(), chunk);
+    }
+
+    public boolean isChunkLoaded(int chunkX, int chunkY)
+    {
+        return this.chunkMap.containsKey(ChunkUtils.toLong(chunkX, chunkY));
     }
 }
