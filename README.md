@@ -195,3 +195,30 @@ use a vector oject.
 Also note, packets will be flushed every tick, so that they aren't just flushed on write, thus saving the OI from a lot of unneed work
 
 ![Multiplaye on gui](./readme-assets/v0.0.6.png)
+
+### v0.0.7 : Simple world generation and bug fixes - 6/June/2021
+We have now got tiles rendering on the screen. this is thru
+a world object which is made up of chunks (16 x 16 tiles). 
+than this is producted by a chunk generation class.
+
+The class below just a basic example, which generates a grass world
+
+```java
+public class BasicChunkGenerator extends ChunkGenerator
+{
+    @Override
+    public Chunk generateChunk(int chunkX, int chunkY)
+    {
+        Chunk chunk = new Chunk(chunkX, chunkY);
+
+        short[] tiles = new short[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
+        Arrays.fill(tiles, (short) 1);
+
+        chunk.setTiles(tiles);
+
+        return chunk;
+    }
+}
+```
+
+![Worlds](./readme-assets/v0.0.7.png)
