@@ -45,7 +45,7 @@ public class PixelExplorerGame extends Game
     {
         if(Explorer.thePlayer == null) return;
 
-        double SPEED = 8;
+        double SPEED = 12;
         if (inputListener.isPressed(KeyEvent.VK_W)) {
             Explorer.thePlayer.getVelocity().setY(-SPEED);
         }

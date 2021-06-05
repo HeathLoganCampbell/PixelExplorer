@@ -4,6 +4,7 @@ import dev.sprock.pixelexplorer.client.engine.assets.Asset;
 import dev.sprock.pixelexplorer.client.engine.graphics.Font;
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
 import dev.sprock.pixelexplorer.shared.assets.EntityAssets;
+import dev.sprock.pixelexplorer.shared.assets.TileAssets;
 
 import java.io.IOException;
 
@@ -16,6 +17,7 @@ public class PixelExplorerScreen extends Screen<PixelExplorerGame>
         try {
             Font.init(Asset.loadBitmap("fonts.png"));
             EntityAssets.init();
+            TileAssets.init();
         } catch (IOException e) {
             e.printStackTrace();
         }
