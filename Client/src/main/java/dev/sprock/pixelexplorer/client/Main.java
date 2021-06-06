@@ -6,7 +6,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Engine<PixelExplorerGame> engine = new Engine<>(900, 600, 1);
+        Engine<PixelExplorerGame> engine = new Engine<>(700, 400, 2);
         engine.setScreen(new PixelExplorerScreen(engine.getScreenWidth(), engine.getScreenHeight()));
         engine.setGame(new PixelExplorerGame(engine.getWidth(), engine.getHeight()));
         engine.setTitle("Pixel Explorer");
