@@ -81,12 +81,27 @@ public class Entity
             int newY = (int) (this.location.getY() + this.velocity.getY() * 2);
 
             // Collision Detection
-            Tile tileMin = getWorld().getTile(new Location(getWorld(), newX, newY));
-            Tile tileMax = getWorld().getTile(new Location(getWorld(), newX + 40, newY + 33));
+            Tile tileMinUpperX = getWorld().getTile(new Location(getWorld(), newX, this.getLocation().getY()));
+            Tile tileMaxUpperX = getWorld().getTile(new Location(getWorld(), newX + 30, this.getLocation().getY()));
 
-            if(!tileMin.isSolid() && !tileMax.isSolid())
+            Tile tileMinLowerX = getWorld().getTile(new Location(getWorld(), newX, this.getLocation().getY() + 30));
+            Tile tileMaxLowerX = getWorld().getTile(new Location(getWorld(), newX + 30, this.getLocation().getY() + 30));
+
+            Tile tileMinUpperY = getWorld().getTile(new Location(getWorld(), this.getLocation().getX(), newY));
+            Tile tileMaxUpperY = getWorld().getTile(new Location(getWorld(), this.getLocation().getX(), newY + 30));
+
+            Tile tileMinLowerY = getWorld().getTile(new Location(getWorld(), this.getLocation().getX() + 30, newY));
+            Tile tileMaxLowerY = getWorld().getTile(new Location(getWorld(), this.getLocation().getX() + 30, newY + 30));
+
+            if(!tileMinUpperX.isSolid() && !tileMaxUpperX.isSolid() && !tileMinLowerX.isSolid() && !tileMaxLowerX.isSolid())
             {
                 this.location.setX(newX);
+
+                this.movedLastTick = true;
+            }
+
+            if(!tileMinUpperY.isSolid() && !tileMaxUpperY.isSolid() && !tileMinLowerY.isSolid() && !tileMaxLowerY.isSolid())
+            {
                 this.location.setY(newY);
 
                 this.movedLastTick = true;
