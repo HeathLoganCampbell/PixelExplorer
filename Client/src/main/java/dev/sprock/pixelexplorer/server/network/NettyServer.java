@@ -5,6 +5,7 @@ import dev.sprock.pixelexplorer.server.Tux;
 import dev.sprock.pixelexplorer.shared.network.PacketProcessor;
 import dev.sprock.pixelexplorer.shared.network.netty.codec.PacketDecoder;
 import dev.sprock.pixelexplorer.shared.network.netty.codec.PacketEncoder;
+import dev.sprock.pixelexplorer.shared.network.netty.codec.PacketFramer;
 import dev.sprock.pixelexplorer.shared.network.netty.codec.ServerProcessHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBufAllocator;
@@ -42,6 +43,7 @@ public class NettyServer
 
                 ChannelPipeline pipeline = ch.pipeline();
 
+                pipeline.addLast("Framer", new PacketFramer());
                 pipeline.addLast("Decoder", new PacketDecoder());
                 pipeline.addLast("Encoder", new PacketEncoder());
                 pipeline.addLast("ServerChannel", new ServerProcessHandler(Tux.getPacketProcessor()));

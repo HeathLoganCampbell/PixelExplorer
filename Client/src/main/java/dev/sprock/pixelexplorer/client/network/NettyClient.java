@@ -2,10 +2,7 @@ package dev.sprock.pixelexplorer.client.network;
 
 import com.sun.istack.internal.NotNull;
 import dev.sprock.pixelexplorer.shared.network.PacketProcessor;
-import dev.sprock.pixelexplorer.shared.network.netty.codec.ClientProcessHandler;
-import dev.sprock.pixelexplorer.shared.network.netty.codec.PacketDecoder;
-import dev.sprock.pixelexplorer.shared.network.netty.codec.PacketEncoder;
-import dev.sprock.pixelexplorer.shared.network.netty.codec.ServerProcessHandler;
+import dev.sprock.pixelexplorer.shared.network.netty.codec.*;
 import dev.sprock.pixelexplorer.shared.network.packet.Packet;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -46,7 +43,7 @@ public class NettyClient
             public void initChannel(SocketChannel ch) throws Exception
             {
                 ChannelPipeline pipeline = ch.pipeline();
-
+                pipeline.addLast("Framer", new PacketFramer());
                 pipeline.addLast("Decoder", new PacketDecoder());
                 pipeline.addLast("Encoder", new PacketEncoder());
                 pipeline.addLast("ClientChannel", new ClientProcessHandler(packetProcessor));

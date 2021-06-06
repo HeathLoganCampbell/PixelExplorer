@@ -42,4 +42,9 @@ public class PlayerConnection
     {
         this.channel.writeAndFlush(packet);
     }
+
+    public void sendBulkPacket(Packet packet)
+    {
+        this.channel.write(packet);
+    }
 }

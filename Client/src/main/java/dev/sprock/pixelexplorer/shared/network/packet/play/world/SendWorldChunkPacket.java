@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Arrays;
+
 /*
 Sent from the Server => Client to say that entity can be removed from the world
  */
@@ -18,6 +20,11 @@ Sent from the Server => Client to say that entity can be removed from the world
 @NoArgsConstructor
 public class SendWorldChunkPacket extends Packet
 {
+    public static final int MIN_PACKET_SIZE = Integer.BYTES +
+                                              Integer.BYTES +
+                                              Integer.BYTES +
+                                            ( Integer.BYTES * Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE );
+
     public int worldId = 0;
     public int chunkX, chunkY;
     public int[] tilesData;
@@ -41,7 +48,14 @@ public class SendWorldChunkPacket extends Packet
         this.worldId = in.readInt();
         this.chunkX = in.readInt();
         this.chunkY = in.readInt();
-        this.tilesData = this.readVarIntArray(in);
+
+        // Chunk data
+        int size = in.readInt();
+        this.tilesData = new int[size];
+        for (int i = 0; i < size; i++)
+        {
+            this.tilesData[i] = in.readInt();
+        }
     }
 
     @Override
@@ -50,6 +64,12 @@ public class SendWorldChunkPacket extends Packet
         out.writeInt(this.worldId);
         out.writeInt(this.chunkX);
         out.writeInt(this.chunkY);
-        this.writeVarIntArray(out, this.tilesData);
+
+        // Chunk data
+        out.writeInt(this.tilesData.length);
+        for (int i = 0; i < this.tilesData.length; i++)
+        {
+            out.writeInt(this.tilesData[i]);
+        }
     }
 }
