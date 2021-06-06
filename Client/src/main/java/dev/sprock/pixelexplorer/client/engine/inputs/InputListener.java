@@ -7,6 +7,19 @@ import java.awt.event.KeyListener;
 
 public class InputListener  implements KeyListener, FocusListener {
 	public boolean[] keys = new boolean[65536];
+
+	public boolean recordBuffer = false;
+	public String keyBuffer = "";
+
+	public void resetKeyBuffer()
+	{
+		this.keyBuffer = "";
+	}
+
+	public void setKeyRecorder(boolean recordKeys)
+	{
+		this.recordBuffer = recordKeys;
+	}
 	
 	//KeyEvent.VK_LEFT
 	public boolean isPressed(int keyCode)
@@ -39,6 +52,21 @@ public class InputListener  implements KeyListener, FocusListener {
 		int code = e.getKeyCode(); 
 		if (code>0 && code<keys.length) {
 			keys[code] = true;
+		}
+
+		if(recordBuffer)
+		{
+			if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE)
+			{
+				if(keyBuffer.length() > 0)
+				{
+					keyBuffer = keyBuffer.substring(0, keyBuffer.length() - 1);
+				}
+			}
+			else
+			{
+				keyBuffer += e.getKeyChar();
+			}
 		}
 	}
 

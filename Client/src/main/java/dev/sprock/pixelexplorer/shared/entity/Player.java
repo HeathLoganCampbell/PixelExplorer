@@ -1,5 +1,6 @@
 package dev.sprock.pixelexplorer.shared.entity;
 
+import dev.sprock.pixelexplorer.client.Explorer;
 import dev.sprock.pixelexplorer.client.engine.graphics.Font;
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
 import dev.sprock.pixelexplorer.client.network.NettyClient;

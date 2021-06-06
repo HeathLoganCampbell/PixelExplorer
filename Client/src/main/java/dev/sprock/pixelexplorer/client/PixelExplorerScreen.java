@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class PixelExplorerScreen extends Screen<PixelExplorerGame>
 {
+    private int chatPadding = 10;
+
     public PixelExplorerScreen(int width, int height)
     {
         super(width, height);
@@ -31,5 +33,10 @@ public class PixelExplorerScreen extends Screen<PixelExplorerGame>
         this.clearScreen();
 
         Explorer.thePlayer.getWorld().render(this);
+
+        if (Explorer.chatMode)
+        {
+            Font.text("Chat " + Explorer.currentMessage, this, 0 + chatPadding, this.height - 6 - chatPadding);
+        }
     }
 }

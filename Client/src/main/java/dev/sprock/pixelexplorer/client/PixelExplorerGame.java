@@ -22,7 +22,6 @@ public class PixelExplorerGame extends Game
     private int height;
 
     private NettyClient client;
-    private World world;
 
     public PixelExplorerGame(int width, int height)
     {
@@ -41,22 +40,41 @@ public class PixelExplorerGame extends Game
     public void tick(InputListener inputListener)
     {
         if(Explorer.thePlayer == null) return;
+        if(!Explorer.chatMode)
+        {
+            double SPEED = 12;
+            if (inputListener.isPressed(KeyEvent.VK_W)) {
+                Explorer.thePlayer.getVelocity().setY(-SPEED);
+            }
 
-        double SPEED = 12;
-        if (inputListener.isPressed(KeyEvent.VK_W)) {
-            Explorer.thePlayer.getVelocity().setY(-SPEED);
+            if (inputListener.isPressed(KeyEvent.VK_S)) {
+                Explorer.thePlayer.getVelocity().setY(SPEED);
+            }
+
+            if (inputListener.isPressed(KeyEvent.VK_A)) {
+                Explorer.thePlayer.getVelocity().setX(-SPEED);
+            }
+
+            if (inputListener.isPressed(KeyEvent.VK_D)) {
+                Explorer.thePlayer.getVelocity().setX(SPEED);
+            }
+
+            if (inputListener.isPressed(KeyEvent.VK_T))
+            {
+                Explorer.chatMode = true;
+                inputListener.setKeyRecorder(true);
+                inputListener.resetKeyBuffer();
+                Explorer.currentMessage = "";
+            }
         }
-
-        if (inputListener.isPressed(KeyEvent.VK_S)) {
-            Explorer.thePlayer.getVelocity().setY(SPEED);
-        }
-
-        if (inputListener.isPressed(KeyEvent.VK_A)) {
-            Explorer.thePlayer.getVelocity().setX(-SPEED);
-        }
-
-        if (inputListener.isPressed(KeyEvent.VK_D)) {
-            Explorer.thePlayer.getVelocity().setX(SPEED);
+        else
+        {
+            Explorer.currentMessage = inputListener.keyBuffer;
+            if (inputListener.isPressed(KeyEvent.VK_ENTER))
+            {
+                Explorer.chatMode = false;
+                inputListener.setKeyRecorder(false);
+            }
         }
 
         Explorer.thePlayer.tick();
