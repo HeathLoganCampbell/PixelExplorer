@@ -222,3 +222,11 @@ public class BasicChunkGenerator extends ChunkGenerator
 ```
 
 ![Worlds](./readme-assets/v0.0.7.png)
+
+### v0.0.8 : Bumper cars - 7/June/2021
+We have no added support for solid objects, so that you
+can colide into walls. 
+as well as 
+ * Increased screen size
+ * Usernames over player
+ * Frame buffering to fix massive index out of bound issue 
