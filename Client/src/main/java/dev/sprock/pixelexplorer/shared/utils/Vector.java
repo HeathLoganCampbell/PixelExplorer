@@ -32,4 +32,70 @@ public class Vector
         this.x *= scalar;
         this.y *= scalar;
     }
+
+    public Direction getDirection()
+    {
+        if(this.getX() > 0)
+        {
+            if(this.getY() > 0)
+            {
+                return Direction.NORTH_EAST;
+            }
+
+            if(this.getY() < 0)
+            {
+                return Direction.SOUTH_EAST;
+            }
+
+            return Direction.EAST;
+        }
+
+        if(this.getX() < 0)
+        {
+
+            if(this.getY() > 0)
+            {
+                return Direction.NORTH_WEST;
+            }
+
+            if(this.getY() < 0)
+            {
+                return Direction.SOUTH_WEST;
+            }
+
+            return Direction.WEST;
+        }
+
+        if(this.getY() > 0)
+        {
+            if(this.getX() > 0)
+            {
+                return Direction.NORTH_EAST;
+            }
+
+            if(this.getX() < 0)
+            {
+                return Direction.NORTH_EAST;
+            }
+
+            return Direction.NORTH;
+        }
+
+        if(this.getY() < 0)
+        {
+            if(this.getX() > 0)
+            {
+                return Direction.SOUTH_EAST;
+            }
+
+            if(this.getX() < 0)
+            {
+                return Direction.SOUTH_WEST;
+            }
+
+            return Direction.SOUTH;
+        }
+
+        return Direction.NORTH;
+    }
 }
