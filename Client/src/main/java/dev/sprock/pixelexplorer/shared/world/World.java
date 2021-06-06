@@ -48,9 +48,8 @@ public class World
             int chunkY = (int) Math.floor(((double) entity.getLocation().getY() / Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
             if (!this.isChunkLoaded(chunkX, chunkY))
             {
-                Chunk chunk = this.chunkGenerator.generateChunk(chunkX, chunkY);
-                this.loadChunk(chunk);
 
+                Chunk chunk = this.generateChunk(chunkX, chunkY);
                 Tux.getPacketProcessor().broadcastPacket(new SendWorldChunkPacket(this.getId(), chunk));
             }
         }
@@ -58,7 +57,7 @@ public class World
 
     public Tile getTile(Location location)
     {
-        Chunk chunk = location.getChunk();
+        Chunk chunk = location.getChunkAndLoad();
         Location chunkMinLocation = chunk.getLocation(location.getWorld());
         int subChunkX = location.getX() - chunkMinLocation.getX();
         int subChunkY = location.getY() - chunkMinLocation.getY();
@@ -104,6 +103,13 @@ public class World
     public Chunk getChunk(int chunkX, int chunkY)
     {
         return this.chunkMap.get(ChunkUtils.toLong(chunkX, chunkY));
+    }
+
+    public Chunk generateChunk(int chunkX, int chunkY)
+    {
+        Chunk chunk = this.chunkGenerator.generateChunk(chunkX, chunkY);
+        this.loadChunk(chunk);
+        return chunk;
     }
 
     public Collection<Chunk> getLoadedChunks()

@@ -49,4 +49,17 @@ public class Location
         int chunkY = this.y / Tile.TILE_SIZE / Chunk.CHUNK_SIZE;
         return this.world.getChunk(chunkX, chunkY);
     }
+
+    public Chunk getChunkAndLoad()
+    {
+        int chunkX = this.x / Tile.TILE_SIZE / Chunk.CHUNK_SIZE;
+        int chunkY = this.y / Tile.TILE_SIZE / Chunk.CHUNK_SIZE;
+
+        if (!this.world.isChunkLoaded(chunkX, chunkY))
+        {
+            this.world.generateChunk(chunkX, chunkY);
+        }
+
+        return this.world.getChunk(chunkX, chunkY);
+    }
 }
