@@ -63,7 +63,7 @@ public class PixelExplorerGame extends Game
 
         if (Explorer.thePlayer.isMovedLastTick())
         {
-            client.sendPacket(new EntityTeleportPacket(0, Explorer.thePlayer.getX(), Explorer.thePlayer.getY(), Explorer.thePlayer.getVelocity().getDirection()));
+            client.sendPacket(new EntityTeleportPacket(0, Explorer.thePlayer.getLocation().getX(), Explorer.thePlayer.getLocation().getY(), Explorer.thePlayer.getVelocity().getDirection()));
         }
     }
 }

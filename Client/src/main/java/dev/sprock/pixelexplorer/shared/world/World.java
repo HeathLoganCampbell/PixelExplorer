@@ -43,8 +43,8 @@ public class World
 
         for (Entity entity : this.entityManager.getEntities())
         {
-            int chunkX = (int) Math.floor(((double) entity.getX() / Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
-            int chunkY = (int) Math.floor(((double) entity.getY()/ Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
+            int chunkX = (int) Math.floor(((double) entity.getLocation().getX() / Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
+            int chunkY = (int) Math.floor(((double) entity.getLocation().getY() / Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
             if (!this.isChunkLoaded(chunkX, chunkY))
             {
                 Chunk chunk = this.chunkGenerator.generateChunk(chunkX, chunkY);

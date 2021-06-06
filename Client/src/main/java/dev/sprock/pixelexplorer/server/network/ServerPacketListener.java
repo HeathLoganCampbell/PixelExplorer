@@ -39,8 +39,8 @@ public class ServerPacketListener extends PacketListener
                         new EntitySpawnPacket(
                             entity.getEntityId(),
                             1,
-                            entity.getX(),
-                            entity.getY()
+                            entity.getLocation().getX(),
+                            entity.getLocation().getY()
                         )
                 );
             }
@@ -53,7 +53,7 @@ public class ServerPacketListener extends PacketListener
             player.setEntityId(ENTITY_ID_COUNTER++);
             world.addEntity(player);
 
-            broadcastIgnoreSelf(new EntitySpawnPacket(player.getEntityId(), 1, player.getX(), player.getY()), player);
+            broadcastIgnoreSelf(new EntitySpawnPacket(player.getEntityId(), 1, player.getLocation().getX(), player.getLocation().getY()), player);
         });
 
 //        setListener(EntitySpawnPacket.class, (packet, player)-> {

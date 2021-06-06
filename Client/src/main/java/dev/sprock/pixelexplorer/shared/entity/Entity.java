@@ -3,6 +3,7 @@ package dev.sprock.pixelexplorer.shared.entity;
 import dev.sprock.pixelexplorer.client.engine.graphics.Font;
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
 import dev.sprock.pixelexplorer.shared.utils.Direction;
+import dev.sprock.pixelexplorer.shared.utils.Location;
 import dev.sprock.pixelexplorer.shared.utils.Vector;
 import dev.sprock.pixelexplorer.shared.world.World;
 import dev.sprock.pixelexplorer.shared.world.chunk.Chunk;
@@ -16,9 +17,7 @@ public class Entity
     @Setter
     private int entityId;
     @Getter
-    private int x, y;
-    @Getter
-    private World world;
+    private Location location;
     @Getter
     private Vector velocity = new Vector();
     @Getter
@@ -35,9 +34,7 @@ public class Entity
     public Entity(int entityId, World world, int x, int y)
     {
         this.entityId = entityId;
-        this.world = world;
-        this.x = x;
-        this.y = y;
+        this.location = new Location(world, x, y);
     }
 
     public void updatePosition(int x, int y)
@@ -47,14 +44,19 @@ public class Entity
 
     public void updatePosition(int x, int y, Direction direction)
     {
-        this.x = x;
-        this.y = y;
+        this.location.setX(x);
+        this.location.setY(y);
         this.direction = direction;
+    }
+
+    public World getWorld()
+    {
+        return this.getLocation().getWorld();
     }
 
     public void setWorld(World world)
     {
-        this.world = world;
+        this.location.setWorld(world);
     }
 
     public void remove()
@@ -73,8 +75,8 @@ public class Entity
             if (Math.abs(this.velocity.getY()) < 0.03) this.velocity.setY(0);
             if (Math.abs(this.velocity.getX()) < 0.03) this.velocity.setX(0);
 
-            int newX = (int) (this.x + this.velocity.getX() * 2);
-            int newY = (int) (this.y + this.velocity.getY() * 2);
+            int newX = (int) (this.location.getX() + this.velocity.getX() * 2);
+            int newY = (int) (this.location.getY() + this.velocity.getY() * 2);
 
 // Collision Detection
 //            int chunkX = newX / Tile.TILE_SIZE / Chunk.CHUNK_SIZE;
@@ -89,8 +91,8 @@ public class Entity
 //                }
 //            }
 
-            this.x = newX;
-            this.y = newY;
+            this.location.setX(newX);
+            this.location.setY(newY);
 
             this.movedLastTick = true;
         }
@@ -98,6 +100,6 @@ public class Entity
 
     public void render(Screen screen)
     {
-        Font.text("" + ((char) ((char) entityId + 'A')), screen, this.x, this.y);
+        Font.text("" + ((char) ((char) entityId + 'A')), screen, this.location.getX(), this.location.getY());
     }
 }

@@ -39,7 +39,7 @@ public class Player extends Entity
             direction = this.getDirection();
         }
 
-        EntityAssets.render(screen, 0, direction.ordinal(), this.getX(), this.getY());
-        Font.text(this.username, screen, this.getX(), this.getY() - 20);
+        EntityAssets.render(screen, 0, direction.ordinal(), this.getLocation().getX(), this.getLocation().getY());
+        Font.text(this.username, screen, this.getLocation().getX(), this.getLocation().getY() - 20);
     }
 }
