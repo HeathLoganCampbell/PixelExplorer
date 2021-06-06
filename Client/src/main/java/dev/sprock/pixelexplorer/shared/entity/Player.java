@@ -16,7 +16,6 @@ public class Player extends Entity
     private String username = "";
 
     public Player(String username)
-
     {
         this.username = username;
     }

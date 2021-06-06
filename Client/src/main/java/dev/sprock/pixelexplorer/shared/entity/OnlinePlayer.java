@@ -45,7 +45,6 @@ public class OnlinePlayer extends Player
 
         Packet packet;
         while ((packet = queuedPackets.poll()) != null) {
-            System.out.println("process packet");
             packetProcessor.forceProcessPacket(packet, this);
         }
 

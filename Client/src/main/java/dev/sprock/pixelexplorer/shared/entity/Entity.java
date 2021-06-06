@@ -29,6 +29,7 @@ public class Entity
 
     public Entity()
     {
+        this.location = new Location(null, 0, 0);
     }
 
     public Entity(int entityId, World world, int x, int y)
