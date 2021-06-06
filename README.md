@@ -229,4 +229,9 @@ can colide into walls.
 as well as 
  * Increased screen size
  * Usernames over player
- * Frame buffering to fix massive index out of bound issue 
+ * Frame buffering to fix massive index out of bound issue
+ * Updated player sprite
+ * 8 direction player sprite
+ * Simple Chat, only client side 
+ 
+![new Sprites](./readme-assets/v0.0.8.png)
