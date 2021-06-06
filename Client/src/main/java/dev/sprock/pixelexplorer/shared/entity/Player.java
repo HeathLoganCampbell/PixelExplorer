@@ -13,7 +13,7 @@ import lombok.Setter;
 public class Player extends Entity
 {
     @Getter
-    private String username;
+    private String username = "";
 
     public Player(String username)
 
@@ -40,5 +40,6 @@ public class Player extends Entity
         }
 
         EntityAssets.render(screen, 0, direction.ordinal(), this.getX(), this.getY());
+        Font.text(this.username, screen, this.getX(), this.getY() - 20);
     }
 }
