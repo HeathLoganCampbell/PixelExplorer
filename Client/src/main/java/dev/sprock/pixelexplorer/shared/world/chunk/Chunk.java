@@ -15,16 +15,16 @@ public class Chunk
     @Getter
     private int chunkX, chunkY;
     @Getter
-    private short[] tiles;
+    private int[] tiles;
 
     public Chunk(int chunkX, int chunkY)
     {
         this.chunkX = chunkX;
         this.chunkY = chunkY;
-        this.tiles = new short[CHUNK_SIZE * CHUNK_SIZE];
+        this.tiles = new int[CHUNK_SIZE * CHUNK_SIZE];
     }
 
-    public void setTiles(short[] tiles)
+    public void setTiles(int[] tiles)
     {
         this.tiles = tiles;
     }
@@ -37,7 +37,7 @@ public class Chunk
         int tileCountX = 0;
         int xOffset = 0;
         int yOffset = 0;
-        for (short tileId : tiles)
+        for (int tileId : tiles)
         {
             Tile tile = Tile.TILE_REGISTER[tileId];
             tile.render(screen, realX + xOffset, realY + yOffset);

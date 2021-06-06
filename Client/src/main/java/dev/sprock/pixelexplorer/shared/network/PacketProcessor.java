@@ -94,6 +94,14 @@ public class PacketProcessor
         }
     }
 
+    public void broadcastPacket(@NotNull Packet packet)
+    {
+        for (Map.Entry<ChannelHandlerContext, PlayerConnection> entry : this.connectedPlayerMap.entrySet())
+        {
+            entry.getValue().sendPacket(packet);
+        }
+    }
+
     public void forceProcessPacket(@NotNull Packet packet, @NotNull OnlinePlayer player)
     {
         packetListener.processPacket(packet, player);

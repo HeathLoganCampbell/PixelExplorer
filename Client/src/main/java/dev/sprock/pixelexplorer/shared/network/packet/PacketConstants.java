@@ -12,4 +12,5 @@ public class PacketConstants
     public static final int ENTITY_DESTROY_PACKET_ID = 11;
     public static final int ENTITY_TELEPORT_PACKET_ID = 12;
     public static final int INIT_WORLD_PACKET_ID = 13;
+    public static final int SEND_WORLD_CHUNK_PACKET_ID = 14;
 }

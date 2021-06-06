@@ -2,14 +2,15 @@ package dev.sprock.pixelexplorer.client.network;
 
 import dev.sprock.pixelexplorer.client.Explorer;
 import dev.sprock.pixelexplorer.shared.entity.Entity;
-import dev.sprock.pixelexplorer.shared.entity.EntityType;
 import dev.sprock.pixelexplorer.shared.entity.Player;
 import dev.sprock.pixelexplorer.shared.network.listener.PacketListener;
 import dev.sprock.pixelexplorer.shared.network.packet.play.EntityDestroyPacket;
 import dev.sprock.pixelexplorer.shared.network.packet.play.EntitySpawnPacket;
 import dev.sprock.pixelexplorer.shared.network.packet.play.EntityTeleportPacket;
-import dev.sprock.pixelexplorer.shared.network.packet.play.InitWorldPacket;
+import dev.sprock.pixelexplorer.shared.network.packet.play.world.InitWorldPacket;
+import dev.sprock.pixelexplorer.shared.network.packet.play.world.SendWorldChunkPacket;
 import dev.sprock.pixelexplorer.shared.world.World;
+import dev.sprock.pixelexplorer.shared.world.chunk.Chunk;
 
 public class ClientPacketListener extends PacketListener
 {
@@ -53,6 +54,15 @@ public class ClientPacketListener extends PacketListener
             if(entity != null)
             {
                 entity.updatePosition(packet.getX(), packet.getY(), packet.getDirection());
+            }
+        });
+
+        this.setListener(SendWorldChunkPacket.class, (packet, nullPlayer) -> {
+            if (packet.getWorldId() == Explorer.thePlayer.getWorld().getId())
+            {
+                Chunk chunk = new Chunk(packet.chunkX, packet.chunkY);
+                chunk.setTiles(packet.tilesData);
+                Explorer.thePlayer.getWorld().loadChunk(chunk);
             }
         });
     }

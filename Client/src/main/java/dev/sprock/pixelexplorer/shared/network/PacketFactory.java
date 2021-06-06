@@ -5,6 +5,8 @@ import dev.sprock.pixelexplorer.shared.network.packet.Packet;
 import dev.sprock.pixelexplorer.shared.network.packet.PacketConstants;
 import dev.sprock.pixelexplorer.shared.network.packet.login.LoginPacket;
 import dev.sprock.pixelexplorer.shared.network.packet.play.*;
+import dev.sprock.pixelexplorer.shared.network.packet.play.world.InitWorldPacket;
+import dev.sprock.pixelexplorer.shared.network.packet.play.world.SendWorldChunkPacket;
 
 public class PacketFactory
 {
@@ -20,6 +22,7 @@ public class PacketFactory
         this.register(PacketConstants.ENTITY_TELEPORT_PACKET_ID, EntityTeleportPacket::new);
         this.register(PacketConstants.ENTITY_DESTROY_PACKET_ID, EntityDestroyPacket::new);
         this.register(PacketConstants.INIT_WORLD_PACKET_ID, InitWorldPacket::new);
+        this.register(PacketConstants.SEND_WORLD_CHUNK_PACKET_ID, SendWorldChunkPacket::new);
     }
 
     public void register(int packetId, ReturnConsumer<Packet> packerConsumer)

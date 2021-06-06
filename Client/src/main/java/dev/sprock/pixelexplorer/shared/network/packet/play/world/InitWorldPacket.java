@@ -1,4 +1,4 @@
-package dev.sprock.pixelexplorer.shared.network.packet.play;
+package dev.sprock.pixelexplorer.shared.network.packet.play.world;
 
 import dev.sprock.pixelexplorer.shared.network.packet.Packet;
 import dev.sprock.pixelexplorer.shared.network.packet.PacketConstants;

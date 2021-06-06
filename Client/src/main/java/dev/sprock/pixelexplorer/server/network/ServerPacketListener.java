@@ -3,15 +3,15 @@ package dev.sprock.pixelexplorer.server.network;
 import dev.sprock.pixelexplorer.server.Tux;
 import dev.sprock.pixelexplorer.shared.entity.Entity;
 import dev.sprock.pixelexplorer.shared.entity.OnlinePlayer;
-import dev.sprock.pixelexplorer.shared.entity.Player;
 import dev.sprock.pixelexplorer.shared.network.listener.PacketListener;
 import dev.sprock.pixelexplorer.shared.network.packet.Packet;
 import dev.sprock.pixelexplorer.shared.network.packet.login.LoginPacket;
-import dev.sprock.pixelexplorer.shared.network.packet.play.EntityDestroyPacket;
 import dev.sprock.pixelexplorer.shared.network.packet.play.EntitySpawnPacket;
 import dev.sprock.pixelexplorer.shared.network.packet.play.EntityTeleportPacket;
-import dev.sprock.pixelexplorer.shared.network.packet.play.InitWorldPacket;
+import dev.sprock.pixelexplorer.shared.network.packet.play.world.InitWorldPacket;
+import dev.sprock.pixelexplorer.shared.network.packet.play.world.SendWorldChunkPacket;
 import dev.sprock.pixelexplorer.shared.world.World;
+import dev.sprock.pixelexplorer.shared.world.chunk.Chunk;
 
 public class ServerPacketListener extends PacketListener
 {
@@ -28,9 +28,10 @@ public class ServerPacketListener extends PacketListener
 
         setListener(InitWorldPacket.class, (packet, player)-> {
             // Get all Player entitys in the world and send them
-            player.getPlayerConnection().sendPacket(new InitWorldPacket(0));
+            int worldId = 0;
+            player.getPlayerConnection().sendPacket(new InitWorldPacket(worldId));
 
-            World world = Tux.getWorldManager().getWorld(0);
+            World world = Tux.getWorldManager().getWorld(worldId);
 
             for (Entity entity : world.getEntities())
             {
@@ -42,6 +43,11 @@ public class ServerPacketListener extends PacketListener
                             entity.getY()
                         )
                 );
+            }
+
+            for (Chunk loadedChunk : world.getLoadedChunks())
+            {
+                Tux.getPacketProcessor().broadcastPacket(new SendWorldChunkPacket(worldId, loadedChunk));
             }
 
             player.setEntityId(ENTITY_ID_COUNTER++);

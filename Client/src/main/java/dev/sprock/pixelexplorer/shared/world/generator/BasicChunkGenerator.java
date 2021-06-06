@@ -11,8 +11,8 @@ public class BasicChunkGenerator extends ChunkGenerator
     {
         Chunk chunk = new Chunk(chunkX, chunkY);
 
-        short[] tiles = new short[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
-        Arrays.fill(tiles, (short) 1);
+        int[] tiles = new int[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
+        Arrays.fill(tiles, 1);
 
         chunk.setTiles(tiles);
 

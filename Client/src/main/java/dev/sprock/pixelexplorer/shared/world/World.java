@@ -3,8 +3,10 @@ package dev.sprock.pixelexplorer.shared.world;
 import dev.sprock.pixelexplorer.client.PixelExplorerScreen;
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
 import dev.sprock.pixelexplorer.client.engine.inputs.InputListener;
+import dev.sprock.pixelexplorer.server.Tux;
 import dev.sprock.pixelexplorer.shared.entity.Entity;
 import dev.sprock.pixelexplorer.shared.entity.EntityManager;
+import dev.sprock.pixelexplorer.shared.network.packet.play.world.SendWorldChunkPacket;
 import dev.sprock.pixelexplorer.shared.utils.ChunkUtils;
 import dev.sprock.pixelexplorer.shared.world.chunk.Chunk;
 import dev.sprock.pixelexplorer.shared.world.generator.BasicChunkGenerator;
@@ -39,17 +41,16 @@ public class World
     {
         this.entityManager.tick();
 
-//        for (Entity entity : this.entityManager.getEntities())
-//        {
-//            int chunkX = (int) Math.floor(((double) entity.getX() / Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
-//            int chunkY = (int) Math.floor(((double) entity.getY()/ Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
-//            if (!this.isChunkLoaded(chunkX, chunkY))
-//            {
-//                Chunk chunk = this.chunkGenerator.generateChunk(chunkX, chunkY);
-//                this.loadChunk(chunk);
-//                // send to all players
-//            }
-//        }
+        for (Entity entity : this.entityManager.getEntities())
+        {
+            int chunkX = (int) Math.floor(((double) entity.getX() / Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
+            int chunkY = (int) Math.floor(((double) entity.getY()/ Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
+            if (!this.isChunkLoaded(chunkX, chunkY))
+            {
+                Chunk chunk = this.chunkGenerator.generateChunk(chunkX, chunkY);
+                Tux.getPacketProcessor().broadcastPacket(new SendWorldChunkPacket(this.getId(), chunk));
+            }
+        }
     }
 
     public void render(Screen screen)
@@ -86,5 +87,10 @@ public class World
     public boolean isChunkLoaded(int chunkX, int chunkY)
     {
         return this.chunkMap.containsKey(ChunkUtils.toLong(chunkX, chunkY));
+    }
+
+    public Collection<Chunk> getLoadedChunks()
+    {
+        return this.chunkMap.values();
     }
 }
