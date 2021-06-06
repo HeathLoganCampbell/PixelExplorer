@@ -52,7 +52,10 @@ public class PixelExplorerServer implements Runnable
     public void tick()
     {
         Tux.getPacketProcessor().update();
-//        System.out.println("Tick");
+        for (World world : Tux.getWorldManager().getWorlds())
+        {
+            world.tick(null);
+        }
     }
 
     public void render()

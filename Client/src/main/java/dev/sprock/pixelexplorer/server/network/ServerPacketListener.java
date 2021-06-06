@@ -58,10 +58,10 @@ public class ServerPacketListener extends PacketListener
         setListener(EntityTeleportPacket.class, (packet, player)-> {
             if(packet.entityId == 0)
             {
-                player.updatePosition(packet.getX(), packet.getY());
+                player.updatePosition(packet.getX(), packet.getY(), packet.getDirection());
             }
 
-            EntityTeleportPacket newPacket = new EntityTeleportPacket(player.getEntityId(), packet.getX(), packet.getY());
+            EntityTeleportPacket newPacket = new EntityTeleportPacket(player.getEntityId(), packet.getX(), packet.getY(), packet.getDirection());
             this.broadcastIgnoreSelf(newPacket, player);
         });
 

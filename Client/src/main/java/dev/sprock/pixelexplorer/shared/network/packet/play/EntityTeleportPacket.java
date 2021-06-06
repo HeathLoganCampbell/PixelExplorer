@@ -2,6 +2,7 @@ package dev.sprock.pixelexplorer.shared.network.packet.play;
 
 import dev.sprock.pixelexplorer.shared.network.packet.Packet;
 import dev.sprock.pixelexplorer.shared.network.packet.PacketConstants;
+import dev.sprock.pixelexplorer.shared.utils.Direction;
 import io.netty.buffer.ByteBuf;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class EntityTeleportPacket extends Packet
 {
     public int entityId;
     public int x, y;
+    public Direction direction;
 
     @Override
     public int getPacketId() {
@@ -31,6 +33,7 @@ public class EntityTeleportPacket extends Packet
         this.entityId = in.readInt();
         this.x = in.readInt();
         this.y = in.readInt();
+        this.direction = Direction.values()[in.readInt()];
     }
 
     @Override
@@ -39,5 +42,6 @@ public class EntityTeleportPacket extends Packet
         out.writeInt(this.entityId);
         out.writeInt(this.x);
         out.writeInt(this.y);
+        out.writeInt(this.direction.ordinal());
     }
 }

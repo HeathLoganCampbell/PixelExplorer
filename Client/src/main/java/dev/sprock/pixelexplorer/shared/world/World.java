@@ -47,6 +47,7 @@ public class World
             {
                 Chunk chunk = this.chunkGenerator.generateChunk(chunkX, chunkY);
                 this.loadChunk(chunk);
+                // send to all players
             }
         }
     }

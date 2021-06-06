@@ -34,6 +34,11 @@ public class Player extends Entity
     public void render(Screen screen)
     {
         Direction direction = this.getVelocity().getDirection();
+        if(this.getDirection() != null)
+        {
+            direction = this.getDirection();
+        }
+
         EntityAssets.render(screen, 0, direction.ordinal(), this.getX(), this.getY());
     }
 }

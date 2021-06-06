@@ -45,14 +45,14 @@ public class ClientPacketListener extends PacketListener
 //            System.out.println("Entity " + packet.getEntityId() + " is now at " + packet.getX() + ", " + packet.getY());
             if(packet.entityId == 0)
             {
-                Explorer.thePlayer.updatePosition(packet.getX(), packet.getY());
+                Explorer.thePlayer.updatePosition(packet.getX(), packet.getY(), packet.getDirection());
                 return;
             }
 
             Entity entity = Explorer.thePlayer.getWorld().getEntity(packet.entityId);
             if(entity != null)
             {
-                entity.updatePosition(packet.getX(), packet.getY());
+                entity.updatePosition(packet.getX(), packet.getY(), packet.getDirection());
             }
         });
     }

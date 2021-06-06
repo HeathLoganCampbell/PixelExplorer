@@ -2,6 +2,7 @@ package dev.sprock.pixelexplorer.shared.entity;
 
 import dev.sprock.pixelexplorer.client.engine.graphics.Font;
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
+import dev.sprock.pixelexplorer.shared.utils.Direction;
 import dev.sprock.pixelexplorer.shared.utils.Vector;
 import dev.sprock.pixelexplorer.shared.world.World;
 import lombok.Getter;
@@ -20,6 +21,9 @@ public class Entity
     private Vector velocity = new Vector();
     @Getter
     @Setter
+    private Direction direction = null;
+    @Getter
+    @Setter
     private boolean movedLastTick = false;
 
     public Entity()
@@ -34,11 +38,16 @@ public class Entity
         this.y = y;
     }
 
-
     public void updatePosition(int x, int y)
+    {
+        this.updatePosition(x, y, null);
+    }
+
+    public void updatePosition(int x, int y, Direction direction)
     {
         this.x = x;
         this.y = y;
+        this.direction = direction;
     }
 
     public void setWorld(World world)
