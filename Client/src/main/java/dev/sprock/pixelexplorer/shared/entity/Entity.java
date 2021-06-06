@@ -5,6 +5,8 @@ import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
 import dev.sprock.pixelexplorer.shared.utils.Direction;
 import dev.sprock.pixelexplorer.shared.utils.Vector;
 import dev.sprock.pixelexplorer.shared.world.World;
+import dev.sprock.pixelexplorer.shared.world.chunk.Chunk;
+import dev.sprock.pixelexplorer.shared.world.tile.Tile;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -71,8 +73,24 @@ public class Entity
             if (Math.abs(this.velocity.getY()) < 0.03) this.velocity.setY(0);
             if (Math.abs(this.velocity.getX()) < 0.03) this.velocity.setX(0);
 
-            this.x += this.velocity.getX() * 2;
-            this.y += this.velocity.getY() * 2;
+            int newX = (int) (this.x + this.velocity.getX() * 2);
+            int newY = (int) (this.y + this.velocity.getY() * 2);
+
+// Collision Detection
+//            int chunkX = newX / Tile.TILE_SIZE / Chunk.CHUNK_SIZE;
+//            int chunkY = newY / Tile.TILE_SIZE / Chunk.CHUNK_SIZE;
+//
+//            Chunk chunk = this.world.getChunk(chunkX, chunkY);
+//            if(chunk != null)
+//            {
+//                if (chunk.isSolid(newX, newY))
+//                {
+//
+//                }
+//            }
+
+            this.x = newX;
+            this.y = newY;
 
             this.movedLastTick = true;
         }

@@ -91,6 +91,11 @@ public class World
         return this.chunkMap.containsKey(ChunkUtils.toLong(chunkX, chunkY));
     }
 
+    public Chunk getChunk(int chunkX, int chunkY)
+    {
+        return this.chunkMap.get(ChunkUtils.toLong(chunkX, chunkY));
+    }
+
     public Collection<Chunk> getLoadedChunks()
     {
         return this.chunkMap.values();

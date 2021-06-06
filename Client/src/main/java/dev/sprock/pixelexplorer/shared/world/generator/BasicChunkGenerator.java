@@ -14,6 +14,10 @@ public class BasicChunkGenerator extends ChunkGenerator
         int[] tiles = new int[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
         Arrays.fill(tiles, 1);
 
+        for (int i = 0; i < 16; i++) {
+            tiles[i + 16 * 4] = 2;
+        }
+
         chunk.setTiles(tiles);
 
         return chunk;

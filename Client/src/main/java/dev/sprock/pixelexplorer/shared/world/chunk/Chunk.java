@@ -54,6 +54,13 @@ public class Chunk
         }
     }
 
+    public boolean isSolid(int pixelX, int pixelY)
+    {
+        int tileId = this.tiles[0];
+        Tile tile = Tile.TILE_REGISTER[tileId];
+        return tile.isSolid();
+    }
+
     public long getLongId()
     {
         return ChunkUtils.toLong(chunkX, chunkY);

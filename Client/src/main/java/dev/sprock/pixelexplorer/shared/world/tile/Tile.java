@@ -2,6 +2,7 @@ package dev.sprock.pixelexplorer.shared.world.tile;
 
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
 import lombok.Getter;
+import lombok.Setter;
 
 public class Tile
 {
@@ -9,6 +10,9 @@ public class Tile
 
     @Getter
     private int id;
+    @Getter
+    @Setter
+    private boolean solid = false;
 
     public Tile(int id)
     {
@@ -25,6 +29,7 @@ public class Tile
     static
     {
         registerTile(new GrassTile(1));
+        registerTile(new WallTile(2));
     }
 
     public static void registerTile(Tile tile)
