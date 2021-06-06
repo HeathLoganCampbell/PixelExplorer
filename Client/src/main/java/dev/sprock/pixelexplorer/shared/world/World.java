@@ -37,7 +37,7 @@ public class World
         this.entityManager.addEntity(entity);
     }
 
-    public void tick(InputListener inputListener)
+    public void tick()
     {
         this.entityManager.tick();
 
@@ -48,6 +48,8 @@ public class World
             if (!this.isChunkLoaded(chunkX, chunkY))
             {
                 Chunk chunk = this.chunkGenerator.generateChunk(chunkX, chunkY);
+                this.loadChunk(chunk);
+
                 Tux.getPacketProcessor().broadcastPacket(new SendWorldChunkPacket(this.getId(), chunk));
             }
         }

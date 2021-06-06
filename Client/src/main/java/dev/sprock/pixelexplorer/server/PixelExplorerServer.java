@@ -54,7 +54,7 @@ public class PixelExplorerServer implements Runnable
         Tux.getPacketProcessor().update();
         for (World world : Tux.getWorldManager().getWorlds())
         {
-            world.tick(null);
+            world.tick();
         }
     }
 

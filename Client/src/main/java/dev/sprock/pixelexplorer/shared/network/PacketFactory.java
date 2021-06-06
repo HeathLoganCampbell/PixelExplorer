@@ -32,6 +32,11 @@ public class PacketFactory
 
     public Packet getPacketInstance(int packetId)
     {
+        if(packetId > 100)
+        {
+            System.out.println("UMMMMMM why tf are we looking for an id " + packetId);
+            return null;
+        }
         ReturnConsumer<Packet> packetCreator = packetCreators[packetId];
         if(packetCreator == null)
         {

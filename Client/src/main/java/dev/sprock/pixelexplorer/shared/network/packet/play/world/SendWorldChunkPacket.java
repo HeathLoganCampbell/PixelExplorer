@@ -24,6 +24,7 @@ public class SendWorldChunkPacket extends Packet
 
     public SendWorldChunkPacket(int worldId, Chunk chunk)
     {
+        this.worldId = worldId;
         this.chunkX = chunk.getChunkX();
         this.chunkY = chunk.getChunkY();
         this.tilesData = chunk.getTiles();
