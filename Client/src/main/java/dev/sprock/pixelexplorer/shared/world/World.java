@@ -8,6 +8,7 @@ import dev.sprock.pixelexplorer.shared.entity.Entity;
 import dev.sprock.pixelexplorer.shared.entity.EntityManager;
 import dev.sprock.pixelexplorer.shared.network.packet.play.world.SendWorldChunkPacket;
 import dev.sprock.pixelexplorer.shared.utils.ChunkUtils;
+import dev.sprock.pixelexplorer.shared.utils.Location;
 import dev.sprock.pixelexplorer.shared.world.chunk.Chunk;
 import dev.sprock.pixelexplorer.shared.world.generator.BasicChunkGenerator;
 import dev.sprock.pixelexplorer.shared.world.generator.ChunkGenerator;
@@ -53,6 +54,15 @@ public class World
                 Tux.getPacketProcessor().broadcastPacket(new SendWorldChunkPacket(this.getId(), chunk));
             }
         }
+    }
+
+    public Tile getTile(Location location)
+    {
+        Chunk chunk = location.getChunk();
+        Location chunkMinLocation = chunk.getLocation(location.getWorld());
+        int subChunkX = location.getX() - chunkMinLocation.getX();
+        int subChunkY = location.getY() - chunkMinLocation.getY();
+        return chunk.getTile(subChunkX / Tile.TILE_SIZE, subChunkY / Tile.TILE_SIZE);
     }
 
     public void render(Screen screen)

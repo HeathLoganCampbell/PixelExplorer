@@ -2,12 +2,17 @@ package dev.sprock.pixelexplorer.shared.world.chunk;
 
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
 import dev.sprock.pixelexplorer.shared.utils.ChunkUtils;
+import dev.sprock.pixelexplorer.shared.utils.Location;
+import dev.sprock.pixelexplorer.shared.world.World;
 import dev.sprock.pixelexplorer.shared.world.tile.Tile;
 import lombok.Getter;
+import lombok.ToString;
+
 /*
  32 pixels = a tile
 32 * 32 tiles = Chunk
  */
+@ToString
 public class Chunk
 {
     public static int CHUNK_SIZE = 16;
@@ -64,5 +69,16 @@ public class Chunk
     public long getLongId()
     {
         return ChunkUtils.toLong(chunkX, chunkY);
+    }
+
+    public Tile getTile(int x, int y)
+    {
+        int tileId = this.tiles[x + (y * Chunk.CHUNK_SIZE)];
+        return Tile.TILE_REGISTER[tileId];
+    }
+
+    public Location getLocation(World world)
+    {
+        return new Location(world, this.chunkX * Chunk.CHUNK_SIZE * Tile.TILE_SIZE, this.chunkY * Chunk.CHUNK_SIZE * Tile.TILE_SIZE);
     }
 }

@@ -18,6 +18,10 @@ public class BasicChunkGenerator extends ChunkGenerator
             tiles[i + 16 * 4] = 2;
         }
 
+        tiles[5 + 16 * 4] = 1;
+        tiles[6 + 16 * 4] = 1;
+        tiles[7 + 16 * 4] = 1;
+
         chunk.setTiles(tiles);
 
         return chunk;

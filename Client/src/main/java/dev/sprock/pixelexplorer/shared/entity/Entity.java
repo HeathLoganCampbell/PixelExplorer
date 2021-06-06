@@ -2,6 +2,7 @@ package dev.sprock.pixelexplorer.shared.entity;
 
 import dev.sprock.pixelexplorer.client.engine.graphics.Font;
 import dev.sprock.pixelexplorer.client.engine.graphics.Screen;
+import dev.sprock.pixelexplorer.shared.assets.EntityAssets;
 import dev.sprock.pixelexplorer.shared.utils.Direction;
 import dev.sprock.pixelexplorer.shared.utils.Location;
 import dev.sprock.pixelexplorer.shared.utils.Vector;
@@ -79,23 +80,17 @@ public class Entity
             int newX = (int) (this.location.getX() + this.velocity.getX() * 2);
             int newY = (int) (this.location.getY() + this.velocity.getY() * 2);
 
-// Collision Detection
-//            int chunkX = newX / Tile.TILE_SIZE / Chunk.CHUNK_SIZE;
-//            int chunkY = newY / Tile.TILE_SIZE / Chunk.CHUNK_SIZE;
-//
-//            Chunk chunk = this.world.getChunk(chunkX, chunkY);
-//            if(chunk != null)
-//            {
-//                if (chunk.isSolid(newX, newY))
-//                {
-//
-//                }
-//            }
+            // Collision Detection
+            Tile tileMin = getWorld().getTile(new Location(getWorld(), newX, newY));
+            Tile tileMax = getWorld().getTile(new Location(getWorld(), newX + 40, newY + 33));
 
-            this.location.setX(newX);
-            this.location.setY(newY);
+            if(!tileMin.isSolid() && !tileMax.isSolid())
+            {
+                this.location.setX(newX);
+                this.location.setY(newY);
 
-            this.movedLastTick = true;
+                this.movedLastTick = true;
+            }
         }
     }
 
