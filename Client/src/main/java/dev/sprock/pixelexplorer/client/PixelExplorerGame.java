@@ -62,7 +62,7 @@ public class PixelExplorerGame extends Game
             Explorer.thePlayer.getVelocity().setX(SPEED);
         }
 
-        Explorer.thePlayer.getWorld().tick(inputListener);
+        Explorer.thePlayer.tick();
 
         if (Explorer.thePlayer.isMovedLastTick())
         {

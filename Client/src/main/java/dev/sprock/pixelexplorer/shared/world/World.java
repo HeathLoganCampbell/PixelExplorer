@@ -39,17 +39,17 @@ public class World
     {
         this.entityManager.tick();
 
-        for (Entity entity : this.entityManager.getEntities())
-        {
-            int chunkX = (int) Math.floor(((double) entity.getX() / Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
-            int chunkY = (int) Math.floor(((double) entity.getY()/ Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
-            if (!this.isChunkLoaded(chunkX, chunkY))
-            {
-                Chunk chunk = this.chunkGenerator.generateChunk(chunkX, chunkY);
-                this.loadChunk(chunk);
-                // send to all players
-            }
-        }
+//        for (Entity entity : this.entityManager.getEntities())
+//        {
+//            int chunkX = (int) Math.floor(((double) entity.getX() / Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
+//            int chunkY = (int) Math.floor(((double) entity.getY()/ Tile.TILE_SIZE) / Chunk.CHUNK_SIZE);
+//            if (!this.isChunkLoaded(chunkX, chunkY))
+//            {
+//                Chunk chunk = this.chunkGenerator.generateChunk(chunkX, chunkY);
+//                this.loadChunk(chunk);
+//                // send to all players
+//            }
+//        }
     }
 
     public void render(Screen screen)
